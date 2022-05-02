@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %}
+
+{% if user.is_authenticated %}
+<h1>Showing all records</h1>
+<p>you can download data through the buttons below</p>
+<button href="{% url 'members:export_data_csv' %}">Export csv</button>
+<button class="button" href="{% url 'members:export_data_xls' %}">
+  Export xls
+</button>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Phone Number</th>
+      <th scope="col">Nationality</th>
+      <th scope="col">Governorate</th>
+      <th scope="col">Organisation</th>
+      <th scope="col">Wants to work?</th>
+      <th scope="col">Makani b4?</th>
+      <th scope="col">Vaccinated by mom or sister?</th>
+      <th scope="col">Degree</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for x in showData %}
+    <tr>
+      <th scope="col">{{ x.objectid }}</th>
+      <td>{{ x.first_name }}</td>
+      <td>{{ x.fisrt_phone }}</td>
+      <td>{{ x.nationality }}</td>
+      <td>{{ x.gov }}</td>
+      <td>{{ x.org_name }}</td>
+      <td>{{ x.interested_in_working }}</td>
+      <td>{{ x.benefited_from_makani }}</td>
+      <td>{{ x.vaccinated }}</td>
+      <td>{{ x.lastdegree }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<h1>please login to view this page</h1>
+<p>you can login through this link: <a href="{% url 'login' %}">login here!</a></p>
+{% endif %}
+{% endblock %}
